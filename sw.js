@@ -1,41 +1,63 @@
 
-const CACHE_NAME='suji-trip-v2-20261030';
-const OFFLINE=['./','./index.html','./manifest.webmanifest'];
+const CACHE_NAME = 'suji-trip-v3-20261030';
 
-self.addEventListener('install',e=>{
-  e.waitUntil(
+const OFFLINE = [
+  './',
+  './index.html',
+  './manifest.webmanifest'
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(c=>c.addAll(OFFLINE))
-      .then(()=>self.skipWaiting())
-  )
+      .then(cache => cache.addAll(OFFLINE))
+      .then(() => self.skipWaiting())
+  );
 });
 
-self.addEventListener('activate',e=>{
-  e.waitUntil(
+self.addEventListener('activate', event => {
+  event.waitUntil(
     caches.keys()
-      .then(keys=>Promise.all(
+      .then(keys => Promise.all(
         keys
-          .filter(k=>k.startsWith('sansuu-game-')||k.startsWith('suji-trip-'))
-          .filter(k=>k!==CACHE_NAME)
-          .map(k=>caches.delete(k))
+          .filter(key =>
+            (key.startsWith('sansuu-game-') ||
+             key.startsWith('suji-trip-')) &&
+            key !== CACHE_NAME
+          )
+          .map(key => caches.delete(key))
       ))
-      .then(()=>self.clients.claim())
-  )
+      .then(() => self.clients.claim())
+  );
 });
 
-self.addEventListener('fetch',e=>{
-  if(e.request.method!=='GET'||new URL(e.request.url).origin!==self.location.origin)return;
+self.addEventListener('fetch', event => {
+  const request = event.request;
 
-  e.respondWith(
-    fetch(e.request)
-      .then(r=>{
-        if(r.ok){
-          const copy=r.clone();
-          caches.open(CACHE_NAME).then(c=>c.put(e.request,copy))
+  if (
+    request.method !== 'GET' ||
+    new URL(request.url).origin !== self.location.origin
+  ) return;
+
+  event.respondWith(
+    fetch(request)
+      .then(response => {
+        if (response.ok) {
+          const copy = response.clone();
+
+          event.waitUntil(
+            caches.open(CACHE_NAME)
+              .then(cache => cache.put(request, copy))
+          );
         }
-        return r
+
+        return response;
       })
-      .catch(()=>caches.match(e.request)
-        .then(r=>r||caches.match('./index.html')))
-  )
+      .catch(async () =>
+        (await caches.match(request)) ||
+        (request.mode === 'navigate'
+          ? caches.match('./index.html')
+          : Response.error())
+      )
+  );
 });

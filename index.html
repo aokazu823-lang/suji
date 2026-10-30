@@ -44,7 +44,7 @@ h1{text-align:center;font-size:clamp(28px,6vw,42px);margin:25px 0 7px}h2{font-si
 #reactionBtn{min-height:240px;max-width:540px;width:100%;display:block;margin:20px auto;border-radius:25px;border:3px solid #bed0e8;font-size:clamp(27px,5vw,41px);font-weight:950;background:#f8d6db;color:#81263c}#reactionBtn.ready{background:#9beaaf;color:#13532b}
 .searchgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));max-width:490px;gap:8px;margin:15px auto}.searchgrid button{min-height:78px;background:#f4f6ff;border:2px solid #cedbf5;border-radius:15px;font-size:34px}.searchgrid button.found{background:#d6f6e2;border-color:#51b97e}
 .levelbuttons{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.levelbuttons button{padding:10px 14px;border:2px solid #b9c9e3;border-radius:14px;background:white;font-weight:900}.levelbuttons button.sel{background:var(--soft);border-color:var(--accent)}
-footer{text-align:center;color:#748096;font-size:13px;margin-top:25px}
+.adult-settings{margin-top:23px;font-size:14px}.adult-settings summary{cursor:pointer;font-weight:850;padding:7px}.adult-settings label{display:block;margin:10px 0}.adult-settings input{display:block;margin:7px 0;max-width:100%}.adult-settings p{font-size:13px}.timer-stop{font-size:14px;padding:9px 12px;border:2px solid #d78a94;color:#9d2540;background:white;border-radius:13px;font-weight:900}
 @media(min-width:750px){.menu{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:480px){main{padding:8px 9px 25px}.person{padding:24px 6px}.card{padding:12px}.answers button{min-height:69px}.problem{padding:10px 4px}.searchgrid button{min-height:64px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -52,49 +52,53 @@ footer{text-align:center;color:#748096;font-size:13px;margin-top:25px}
 <body>
 <main>
 <header>
-  <div class="topline"><button class="smallbtn" id="goHome">⌂ ホーム</button><div class="brand">🌈 ふたりの あそびば</div><button class="smallbtn" id="soundBtn">🔊</button></div>
-  <div id="timerBox" class="hidden" aria-live="off"><span id="timerLabel">5ふんタイマー</span><strong id="clock">05:00</strong><button class="primary" id="timerStart">▶ スタート</button><div class="timerbar"><div id="timerFill"></div></div></div>
+  <div class="topline"><button class="smallbtn" id="goHome">🏠 さいしょへ</button><div class="brand">🌈 ふたりの あそびば</div><button class="smallbtn" id="soundBtn">🔊</button></div>
+  <div id="timerBox" class="hidden" aria-live="off"><span id="timerLabel">5ふんタイマー</span><strong id="clock">05:00</strong><button class="primary" id="timerStart">▶ スタート</button><button class="timer-stop hidden" id="timerStop">⏹ じかんを おわる</button><div class="timerbar"><div id="timerFill"></div></div></div>
 </header>
 <section id="home">
-  <h1>🌈 だれが あそぶ？</h1><p class="subtitle">ひとりでも ふたりでも あそべるよ！</p>
-  <div class="pick"><button class="person blue" data-person="hinane">🐱<br>ひなね<small>あおの じかん</small></button><button class="person red" data-person="otone">🐰<br>おとね<small>あかの じかん</small></button><button class="person purple team" data-person="team">👭 ふたりで あそぶ<small>こうたいで きょうりょく！</small></button></div>
-  <p class="center muted">5ふんたったら、いまのゲームがおわってからこうたい！</p>
+  <h1>🌈 だれが あそぶ？</h1>
+  <div class="pick"><button class="person blue" data-person="hinane">🐱<br>ひなね</button><button class="person red" data-person="otone">🐰<br>おとね</button><button class="person purple team" data-person="team">👭 ふたりで あそぶ</button></div>
 </section>
 <section id="menu" class="hidden">
   <h1 id="menuTitle">あそびを えらぼう</h1>
-  <div id="menuNotice" class="notice center">上の「スタート」をおしてね</div>
+  <div id="menuNotice" class="notice center">うえの「▶ スタート」を おしてね</div>
   <div id="soloMenu">
     <div class="cat">🔢 さんすう・ことば</div><div class="menu">
-      <button data-game="math">➕ さんすう<span>たしざん・ひきざん 10もん</span></button>
-      <button data-game="fill">🧩 あなうめ<span>□に はいる すうじ</span></button>
-      <button data-game="pattern">🔢 かずの ならび<span>つぎの すうじを かんがえよう</span></button>
-      <button data-game="clock">🕒 とけい<span>なんじ・なんじはん</span></button>
-      <button data-game="word">📖 ことば<span>はんたいの ことば</span></button>
-      <button data-game="logic">🔎 かんがえるクイズ<span>じゅんばん・くらべっこ</span></button>
-      <button data-game="riddle">❓ なぞなぞ<span>ヒントを みて ひらめこう</span></button>
-      <button data-game="pun">😂 ダジャレ<span>ことばの おもしろさ</span></button>
+      <button data-game="math">➕ さんすう</button>
+      <button data-game="fill">🧩 あなうめ</button>
+      <button data-game="pattern">🔢 かずの ならび</button>
+      <button data-game="clock">🕒 とけい</button>
+      <button data-game="word">📖 ことば</button>
+      <button data-game="logic">🔎 かんがえるクイズ</button>
+      <button data-game="riddle">❓ なぞなぞ</button>
+      <button data-game="pun">😂 ダジャレ</button>
     </div>
     <div class="cat">🎮 ミニゲーム</div><div class="menu">
-      <button data-game="balloon">🎈 ふうせん<span>20びょうで スコアをかせごう</span></button>
-      <button data-game="memory">🧠 えあわせ<span>6・8・10ペアから えらべる</span></button>
-      <button data-game="reaction">⚡ はやおし<span>みどりになったら タッチ</span></button>
+      <button data-game="balloon">🎈 ふうせん</button>
+      <button data-game="memory">🧠 えあわせ</button>
+      <button data-game="reaction">⚡ はやおし</button>
     </div>
   </div>
   <div id="coopMenu" class="hidden"><div class="cat">👭 ふたりで きょうりょく</div><div class="menu">
-    <button data-game="treasure">🏝️ おたからたんけん<span>じゅんばんに といて すすもう</span></button>
-    <button data-game="rocket">🚀 ふたりでロケット<span>ぶひんをあつめて うちあげよう</span></button>
-    <button data-game="search">🔎 ふたりでさがそう<span>こうたいで えを みつけよう</span></button>
+    <button data-game="treasure">🏝️ おたからたんけん</button>
+    <button data-game="rocket">🚀 ふたりでロケット</button>
+    <button data-game="search">🔎 ふたりでさがそう</button>
   </div></div>
-  <div class="card"><h2>🏠 かていようの もんだい</h2><p class="muted">プライベートな問題はこの端末にだけ保存。GitHubにはアップロードされません。</p><label>なぞなぞの問題ファイル（.txt または .json）<input type="file" id="importRiddles" accept=".txt,.json,application/json,text/plain"></label><p class="muted">テキスト形式は1行につき「問題|答え|ヒント」。JSON形式は [{"q":"問題","ans":"答え","hint":"ヒント"}]。</p><div id="importStatus" role="status"></div><button class="secondary" id="clearImports">この端末の追加問題を消す</button></div>
+  <details class="card adult-settings"><summary>⚙️ おとなの せってい</summary>
+    <label>なぞなぞを いれる（.txt / .json）<input type="file" id="importRiddles" accept=".txt,.json,application/json,text/plain"></label>
+    <p class="muted">1ぎょうに「もんだい|こたえ|ヒント」。この たんまつにだけ ほぞんするよ。</p>
+    <div id="importStatus" role="status"></div><button class="secondary" id="clearImports">いれた もんだいを けす</button>
+  </details>
 </section>
 <section id="play" class="hidden">
   <div class="row" style="margin-top:16px"><button class="secondary" id="quitGame">◀ ゲームを やめる</button><span id="turnTag">1 / 10</span></div>
-  <div id="timeNotice" class="notice danger hidden" role="status">⏰ 5ふん！ このゲームがおわったら こうたい！</div>
+  <div id="timeNotice" class="notice danger hidden" role="status">⏰ 5ふん！ このゲームが おわったら つぎのひと！</div>
   <div class="card"><div class="row"><div id="playTitle">さんすう</div><div id="gameStat">⭐ 0</div></div><div class="meter"><div id="gameMeter"></div></div><div id="gameArea"></div><div id="feedback" aria-live="polite"></div><div id="gameActions"></div></div>
 </section>
 <section id="result" class="hidden center"><h1 id="resultTitle">🎉 クリア！</h1><div class="card"><div id="resultStats"></div><div id="resultExplain" class="muted"></div></div><div id="resultActions" class="centeractions"></div></section>
-<section id="swap" class="hidden center"><h1>⏰ こうたいの じかん！</h1><div class="card"><div style="font-size:65px">🎉</div><h2 id="swapText">5ふん あそんだよ！</h2><p>いまの ゲームが おわったら つぎのひとへ！</p><button class="primary" id="swapBtn">つぎのひとへ ➜</button></div></section>
-<footer>📱 インターネットがなくても あそべるよ（さいしょの読みこみ後）</footer>
+<section id="swap" class="hidden center"><h1>⏰ 5ふん おわり！</h1><div class="card"><h2 id="swapText">よく あそんだね！</h2><h2>つぎは だれが あそぶ？</h2>
+  <div class="pick"><button class="person blue" data-next="hinane">🐱<br>ひなね</button><button class="person red" data-next="otone">🐰<br>おとね</button><button class="person purple team" data-next="team">👭 ふたりで あそぶ</button></div>
+  <button class="secondary" id="swapDone">🏠 おわる</button></div></section>
 </main>
 <script>
 (()=>{'use strict';
@@ -107,13 +111,19 @@ function show(s){screen=s;for(const id of ['home','menu','play','result','swap']
 function bell(ok=true){if(!soundOn)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume();const t=ac.currentTime;let notes=ok?[520,660,780]:[310,240];notes.forEach((hz,i)=>{let o=ac.createOscillator(),g=ac.createGain();o.frequency.value=hz;o.type='sine';g.gain.setValueAtTime(.001,t+i*.12);g.gain.exponentialRampToValueAtTime(.11,t+i*.12+.02);g.gain.exponentialRampToValueAtTime(.001,t+i*.12+.19);o.connect(g).connect(ac.destination);o.start(t+i*.12);o.stop(t+i*.12+.2)})}catch{}}
 const expired=()=>!!deadline&&Date.now()>=deadline;
 function persist(){storage.set(KEY,{person,deadline})}
-function timerUI(){let shown=!!person;$('timerBox').classList.toggle('hidden',!shown);if(!shown)return;let left=deadline?Math.max(0,deadline-Date.now()):DURATION;let m=Math.floor(left/60000),s=Math.floor(left%60000/1000);$('clock').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');$('timerFill').style.width=100*left/DURATION+'%';$('timerLabel').textContent=NAMES[person];$('timerStart').classList.toggle('hidden',!!deadline);$('timeNotice').classList.toggle('hidden',!expired());if(expired()&&screen==='menu')swapScreen();if(expired()&&screen==='result')resultButtons();}
+function timerUI(){let shown=!!person;$('timerBox').classList.toggle('hidden',!shown);if(!shown)return;let left=deadline?Math.max(0,deadline-Date.now()):DURATION;let m=Math.floor(left/60000),s=Math.floor(left%60000/1000);$('clock').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');$('timerFill').style.width=100*left/DURATION+'%';$('timerLabel').textContent=NAMES[person];$('timerStart').classList.toggle('hidden',!!deadline);$('timerStop').classList.toggle('hidden',!deadline);$('timeNotice').classList.toggle('hidden',!(expired()&&screen==='play'));if(expired()&&screen==='menu')swapScreen();if(expired()&&screen==='result')resultButtons();}
 function choosePerson(p){cleanup();active=null;person=p;deadline=0;persist();document.body.dataset.player=p;menuScreen()}
 function beginTurn(){if(!person||deadline)return;deadline=Date.now()+DURATION;persist();bell(true);timerUI();menuScreen()}
 function menuScreen(){cleanup();cleanup=()=>{};active=null;document.body.dataset.player=person;show('menu');$('menuTitle').textContent=NAMES[person]+'の あそび';$('soloMenu').classList.toggle('hidden',person==='team');$('coopMenu').classList.toggle('hidden',person!=='team');$('menuNotice').textContent=deadline?'🎮 あそびたい ゲームをえらんでね':'⏱️ 上の「▶ スタート」で5ふんが はじまるよ！';$('menuNotice').classList.toggle('hidden',!!deadline);document.querySelectorAll('[data-game]').forEach(b=>b.disabled=!deadline||expired());timerUI()}
-function swapScreen(){cleanup();cleanup=()=>{};active=null;document.body.dataset.player=person;show('swap');$('swapText').textContent=person==='team'?'ふたりで 5ふん あそんだね！':LABEL[person]+'の 5ふんが おわったよ！';timerUI()}
-function nextPerson(){let p=person==='hinane'?'otone':person==='otone'?'hinane':'hinane';choosePerson(p)}
-function goHome(){if(active){if(!confirm('いまのゲームを やめる？'))return;cleanup();active=null}if(expired())return swapScreen();if(deadline)return menuScreen();person=null;deadline=0;persist();document.body.removeAttribute('data-player');show('home');timerUI()}
+function swapScreen(){cleanup();cleanup=()=>{};active=null;document.body.dataset.player=person;show('swap');$('swapText').textContent=person==='team'?'ふたりで よく がんばったね！':LABEL[person]+'、よく がんばったね！';timerUI()}
+// さいしょに もどるときは 5ふんタイマーも やめる
+function resetToHome(){cleanup();cleanup=()=>{};active=null;person=null;deadline=0;persist();document.body.removeAttribute('data-player');show('home');timerUI()}
+function confirmHome(){if(screen==='home')return;const msg=active?'ゲームと じかんを やめて、さいしょに もどる？':deadline?'じかんを やめて、さいしょに もどる？':'さいしょに もどる？';if(confirm(msg))resetToHome()}
+// あそんでいる ゲームだけ やめて、じかんは そのまま
+function quitCurrentGame(){if(!active)return;if(!confirm('この ゲームを やめる？'))return;cleanup();cleanup=()=>{};active=null;if(expired())swapScreen();else menuScreen()}
+function stopTimer(){if(!deadline)return;if(confirm('5ふんタイマーを おわりにする？'))resetToHome()}
+// おなじ こを えらんでも、あたらしい 5ふんが はじまる
+function nextTurn(p){cleanup();cleanup=()=>{};active=null;person=p;deadline=Date.now()+DURATION;persist();document.body.dataset.player=p;menuScreen();bell(true)}
 const bestKey=k=>k==='math'&&person!=='team'?'sansuu_best_'+person:'suji_trip_best_'+k+'_'+(person==='team'?'team':person);
 function readBest(mode){if(mode==='math'&&person!=='team'){try{return Number(localStorage.getItem(bestKey(mode)))||0}catch{return 0}}return Number(storage.get(bestKey(mode),0))}
 function saveBest(mode,value){let key=bestKey(mode),old=mode==='math'?readBest(mode):Number(storage.get(key,mode==='reaction'?999999:-999999));if(mode==='math'&&person!=='team'){if(value>old)try{localStorage.setItem(key,String(value))}catch{}}else if((mode==='reaction'?value<old:value>old))storage.set(key,value)}
@@ -122,8 +132,8 @@ function startGame(type){if(!deadline||expired())return swapScreen();cleanup();c
 function stat(text,ratio,tag){$('gameStat').textContent=text;$('gameMeter').style.width=Math.max(0,Math.min(100,ratio*100))+'%';$('turnTag').textContent=tag||''}
 function button(text,fn,style='primary'){const b=document.createElement('button');b.type='button';b.className=style;b.textContent=text;b.onclick=fn;return b}
 function action(text,fn,style='primary'){$('gameActions').replaceChildren(button(text,fn,style))}
-function endGame(title,detail,score){const type=active?.type;cleanup();cleanup=()=>{};active=null;show('result');$('resultTitle').textContent=title;$('resultStats').textContent=detail;$('resultExplain').textContent=expired()?'⏰ 5ふんたったので こうたいしよう！':'まだ じかんがあれば つぎのゲームもできるよ！';if(type&&typeof score==='number')saveBest(type,score);resultButtons(type);timerUI()}
-function resultButtons(type){if(screen!=='result')return;const box=$('resultActions');box.innerHTML='';if(expired()){box.append(button('⏰ こうたいする ➜',swapScreen))}else{box.append(button('▶ もういっかい',()=>startGame(type)));box.append(button('🎮 ほかのゲーム',menuScreen,'secondary'))}}
+function endGame(title,detail,score){const type=active?.type;cleanup();cleanup=()=>{};active=null;show('result');$('resultTitle').textContent=title;$('resultStats').textContent=detail;$('resultExplain').textContent=expired()?'⏰ つぎに あそぶ ひとを えらぼう！':'';if(type&&typeof score==='number')saveBest(type,score);resultButtons(type);timerUI()}
+function resultButtons(type){if(screen!=='result')return;const box=$('resultActions');box.innerHTML='';if(expired()){box.append(button('⏰ つぎのひとを えらぶ',swapScreen));box.append(button('🏠 おわる',confirmHome,'secondary'))}else{box.append(button('▶ もういっかい',()=>startGame(type)));box.append(button('🎮 ほかのゲーム',menuScreen,'secondary'));box.append(button('🏠 おわる',confirmHome,'secondary'))}}
 function getRole(i){return i%2===0?'hinane':'otone'}
 function roleTag(role){document.body.dataset.player=role;$('turnTag').textContent=NAMES[role]+' のばん！'}
 function regularTag(i,total){document.body.dataset.player=person;$('turnTag').textContent=(i+1)+' / '+total+'もん'}
@@ -282,12 +292,12 @@ function startReaction(){const g=active;let count=0,total=0,ready=false,stop=fal
 function startSearch(){active.total=6;renderSearch()}
 function renderSearch(){const g=active,i=g.round,role=getRole(i);roleTag(role);let icons=['🍎','⭐','🐟','🦋','🍀','🍓','🚀','🐱','🌸'];let target=pick(icons),goal=2+rnd(2),other=shuffle(icons.filter(x=>x!==target));let board=shuffle([...Array(goal).fill(target),...Array.from({length:12-goal},(_,j)=>other[j%other.length])]);let found=new Set();stat(`🔎 0 / ${goal}`,i/6,NAMES[role]+' のばん！');$('gameArea').innerHTML=`<p class="center">${i+1} / 6 ステップ</p><div class="problem">${target} を ${goal}こ さがそう！</div><div class="searchgrid" id="searchGrid"></div>`;$('feedback').textContent='みつけたら タップ！';$('gameActions').innerHTML='';for(let [j,v] of board.entries()){let b=button(v,()=>{if(found.has(j))return;if(v===target){found.add(j);b.classList.add('found');b.disabled=true;bell(true);stat(`🔎 ${found.size} / ${goal}`,(i+found.size/goal)/6,NAMES[role]+' のばん！');if(found.size===goal){g.score++;$('feedback').textContent='🎉 ぜんぶ みつけた！';action(i===5?'🏆 けっかをみる':'つぎの ひとの ばん ➜',()=>{g.round++;if(g.round===6)endGame('🎉 ふたりで はっけん！',`6かい みつけたよ！`,g.score);else renderSearch()})}}else{b.disabled=true;bell(false);$('feedback').textContent='😊 ちがう えだよ！'}});$('searchGrid').append(b)}}
 // 家庭内だけで使う追加問題。公開コードには内容を埋め込みません。
-$('importRiddles').onchange=async e=>{let file=e.target.files?.[0];if(!file)return;try{let raw=await file.text(),rows;if(file.name.toLowerCase().endsWith('.json'))rows=JSON.parse(raw);else rows=raw.split(/\r?\n/).filter(x=>x.trim()).map(line=>{let [q,ans,hint='']=line.split('|').map(x=>x.trim());return{q,ans,hint}});if(!Array.isArray(rows)||!rows.length||rows.length>1000||rows.some(x=>!x||typeof x.q!=='string'||typeof x.ans!=='string'||!x.q.trim()||!x.ans.trim()||x.q.length>300||x.ans.length>70))throw Error('形式がちがうみたい');let old=storage.get(PRIVATE_KEY,[]),merged=[...old,...rows.map(x=>({q:x.q.trim(),ans:x.ans.trim(),hint:String(x.hint||'').slice(0,200)}))];const map=new Map(merged.map(x=>[x.q,x]));storage.set(PRIVATE_KEY,[...map.values()]);$('importStatus').textContent=`✅ ${rows.length}問を この端末に保存したよ！`}catch(err){$('importStatus').textContent='⚠️ 読みこめなかったよ：'+err.message}e.target.value=''};
-$('clearImports').onclick=()=>{if(confirm('追加した問題を この端末から消す？')){storage.set(PRIVATE_KEY,[]);$('importStatus').textContent='追加問題を消しました'}};
+$('importRiddles').onchange=async e=>{let file=e.target.files?.[0];if(!file)return;try{let raw=await file.text(),rows;if(file.name.toLowerCase().endsWith('.json'))rows=JSON.parse(raw);else rows=raw.split(/\r?\n/).filter(x=>x.trim()).map(line=>{let [q,ans,hint='']=line.split('|').map(x=>x.trim());return{q,ans,hint}});if(!Array.isArray(rows)||!rows.length||rows.length>1000||rows.some(x=>!x||typeof x.q!=='string'||typeof x.ans!=='string'||!x.q.trim()||!x.ans.trim()||x.q.length>300||x.ans.length>70))throw Error('形式がちがうみたい');let old=storage.get(PRIVATE_KEY,[]),merged=[...old,...rows.map(x=>({q:x.q.trim(),ans:x.ans.trim(),hint:String(x.hint||'').slice(0,200)}))];const map=new Map(merged.map(x=>[x.q,x]));storage.set(PRIVATE_KEY,[...map.values()]);$('importStatus').textContent=`✅ ${rows.length}もんを この たんまつに いれたよ！`}catch(err){$('importStatus').textContent='⚠️ よみこめなかったよ：'+err.message}e.target.value=''};
+$('clearImports').onclick=()=>{if(confirm('いれた もんだいを けす？')){storage.set(PRIVATE_KEY,[]);$('importStatus').textContent='もんだいを けしたよ！'}};
 // イベント設定
 for(let b of document.querySelectorAll('[data-person]'))b.onclick=()=>choosePerson(b.dataset.person);
 for(let b of document.querySelectorAll('[data-game]'))b.onclick=()=>startGame(b.dataset.game);
-$('timerStart').onclick=beginTurn;$('goHome').onclick=goHome;$('quitGame').onclick=goHome;$('swapBtn').onclick=nextPerson;$('soundBtn').onclick=()=>{soundOn=!soundOn;$('soundBtn').textContent=soundOn?'🔊':'🔇'};
+$('timerStart').onclick=beginTurn;$('timerStop').onclick=stopTimer;$('goHome').onclick=confirmHome;$('quitGame').onclick=quitCurrentGame;$('swapDone').onclick=confirmHome;for(let b of document.querySelectorAll('[data-next]'))b.onclick=()=>nextTurn(b.dataset.next);$('soundBtn').onclick=()=>{soundOn=!soundOn;$('soundBtn').textContent=soundOn?'🔊':'🔇'};
 try{let st=storage.get(KEY,null);if(st?.person&&['hinane','otone','team'].includes(st.person)){person=st.person;deadline=Number(st.deadline)||0;document.body.dataset.player=person;if(expired())swapScreen();else menuScreen()}}catch{}
 timerUI();setInterval(timerUI,500);document.addEventListener('visibilitychange',()=>{if(!document.hidden)timerUI()});
 })();
